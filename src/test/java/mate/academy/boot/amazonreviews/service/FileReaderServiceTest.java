@@ -10,7 +10,7 @@ class FileReaderServiceTest {
 
     @Test
     void readFile_Ok() {
-        String filePath = "src\\test\\resources\\Content.txt";
+        String filePath = "src/test/resources/Content.txt";
         File file = new File(filePath);
         Assertions.assertTrue(file.exists());
         List<String> expected = List.of("content");
