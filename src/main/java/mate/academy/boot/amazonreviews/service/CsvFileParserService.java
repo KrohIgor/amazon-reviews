@@ -1,5 +1,7 @@
 package mate.academy.boot.amazonreviews.service;
 
+import com.univocity.parsers.csv.CsvParser;
+import com.univocity.parsers.csv.CsvParserSettings;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CsvFileParserService {
+    private static final int MAX_POSSIBLE_TEXT_LENGTH = 25_000;
     private static final int REVIEW_ID = 0;
     private static final int PRODUCT_ID = 1;
     private static final int USER_ID = 2;
@@ -23,8 +26,11 @@ public class CsvFileParserService {
 
     public List<ReviewFromFileDto> parse(List<String> reviewStrings) {
         List<ReviewFromFileDto> reviews = new ArrayList<>();
+        CsvParserSettings settings = new CsvParserSettings();
+        settings.setMaxCharsPerColumn(MAX_POSSIBLE_TEXT_LENGTH);
+        CsvParser csvParser = new CsvParser(settings);
         for (int i = 1; i < reviewStrings.size(); i++) {
-            String[] data = reviewStrings.get(i).split(",", 10);
+            String[] data = csvParser.parseLine(reviewStrings.get(i));
             ReviewFromFileDto reviewFromFileDto = new ReviewFromFileDto();
             reviewFromFileDto.setReviewId(Long.parseLong(data[REVIEW_ID]));
             reviewFromFileDto.setProductId(data[PRODUCT_ID]);
