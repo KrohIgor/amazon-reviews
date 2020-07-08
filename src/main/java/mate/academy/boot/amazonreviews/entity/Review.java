@@ -3,6 +3,7 @@ package mate.academy.boot.amazonreviews.entity;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Data;
@@ -14,7 +15,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "review")
 public class Review {
     @Id
-    //@MapsId
     private Long reviewId;
     @ManyToOne
     private Product product;
@@ -25,5 +25,6 @@ public class Review {
     private Long score;
     private LocalDateTime time;
     private String summary;
+    @Lob
     private String text;
 }

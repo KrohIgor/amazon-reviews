@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "user")
 public class User {
     @Id
-    //@MapsId
     private String userId;
     private String profileName;
     @OneToMany
